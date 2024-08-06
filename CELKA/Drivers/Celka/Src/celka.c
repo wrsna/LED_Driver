@@ -44,7 +44,7 @@ void Lamp_Start(void)
 			Error_Handler();
 		}
 
-		if(HAL_ADC_Start_IT(&hadc1) != HAL_OK)
+		if(HAL_ADC_Start_DMA(&hadc1, hlamp.ADC_Results, 2) != HAL_OK)
 		{
 			Error_Handler();
 		}
@@ -101,6 +101,12 @@ void Lamp_SetPower(void)
 void Lamp_DeInit(void)
 {
 	//#############ADC_Deinit################################
+	if(HAL_ADC_Stop_DMA(&hadc1) != HAL_OK)
+	{
+		Error_Handler();
+	}
+
+
 	if(HAL_ADC_DeInit(&hadc1) != HAL_OK)
 	{
 		Error_Handler();

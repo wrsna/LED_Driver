@@ -19,6 +19,8 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "adc.h"
+#include "dma.h"
+#include "iwdg.h"
 #include "tim.h"
 #include "gpio.h"
 
@@ -99,7 +101,10 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
 
+  MX_IWDG_Init();
   /* USER CODE BEGIN 2 */
+
+   __HAL_IWDG_START(&hiwdg);
 
   /* USER CODE END 2 */
 
@@ -121,6 +126,8 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+
+	  HAL_IWDG_Refresh(&hiwdg);
   }
   while(1); // security
   /* USER CODE END 3 */
@@ -138,10 +145,12 @@ void SystemClock_Config(void)
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI|RCC_OSCILLATORTYPE_LSI;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
   RCC_OscInitStruct.HSIDiv = RCC_HSI_DIV4;
   RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
+  RCC_OscInitStruct.LSIState = RCC_LSI_ON;
+
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
     Error_Handler();
@@ -175,7 +184,7 @@ void Error_Handler(void)
   /* USER CODE BEGIN Error_Handler_Debug */
   /* User can add his own implementation to report the HAL error return state */
   __disable_irq();
-  __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 750);
+  __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 100);
   while (1)
   {
   }
