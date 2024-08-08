@@ -61,8 +61,8 @@ all: main-build
 main-build: CELKA.elf secondary-outputs
 
 # Tool invocations
-CELKA.elf CELKA.map: $(OBJS) $(USER_OBJS) C:\Users\Miha\Documents\GitHub\LED_Driver\CELKA\STM32C011J6MX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "CELKA.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m0plus -T"C:\Users\Miha\Documents\GitHub\LED_Driver\CELKA\STM32C011J6MX_FLASH.ld" --specs=nosys.specs -Wl,-Map="CELKA.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+CELKA.elf CELKA.map: $(OBJS) $(USER_OBJS) C:\Users\mihas\Documents\GitHub\LED_Driver\CELKA\STM32C011J6MX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "CELKA.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m0plus -T"C:\Users\mihas\Documents\GitHub\LED_Driver\CELKA\STM32C011J6MX_FLASH.ld" --specs=nosys.specs -Wl,-Map="CELKA.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

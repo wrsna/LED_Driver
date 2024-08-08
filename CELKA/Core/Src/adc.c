@@ -186,22 +186,38 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* adcHandle)
 }
 
 /* USER CODE BEGIN 1 */
-void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
-{
+void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc){
+	  static uint8_t reentrance = 0;
+	  static uint32_t duty;
 
-		static int duty = 200;
-	  // check status and turn lamp off if overhit or batt low
-	  if((hlamp.status == LAMP_ON) && ((hlamp.ADC_Results[TEMP_LOCATION] >= TEMP_TH) || (hlamp.ADC_Results[BATT_LOCATION] <= BATT_TH)))
+	  reentrance++;
+
+	  if(reentrance == 1)
 	  {
-		 __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 300);
-		 hlamp.helth = (hlamp.ADC_Results[TEMP_LOCATION] >= TEMP_TH) ? LAMP_TEMP_ERR : LAMP_BATT_ERR;
+		  hlamp.ADC_Results[TEMP_LOCATION] = HAL_ADC_GetValue(hadc);
+		  duty = 200;
+	  }
+	  // check status and turn lamp off if overhit or batt low
+	  else if(reentrance == 2)
+	  {
+		  reentrance = 0;
+		  duty = 400;
+
+		  hlamp.ADC_Results[BATT_LOCATION] = HAL_ADC_GetValue(hadc);
+
+
+		  if((hlamp.status == LAMP_ON) && ((hlamp.ADC_Results[TEMP_LOCATION] >= TEMP_TH) || (hlamp.ADC_Results[BATT_LOCATION] <= BATT_TH)))
+	  	  {
+		  	 __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 300);
+		 	 hlamp.helth = (hlamp.ADC_Results[TEMP_LOCATION] >= TEMP_TH) ? LAMP_TEMP_ERR : LAMP_BATT_ERR;
+
+	  	  }
+
 
 	  }
 
 
 	  // HAL_ADC_ConfigChanell(); //Ta koda je delala probleme tuki in je šlo v Err_handler();
-	  __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, duty);
-	  duty = duty+100;
 		//HAL_ADC_Start_IT(hadc); ///!!!! trigger timer????
 }
 

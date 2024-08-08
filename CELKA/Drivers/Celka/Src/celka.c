@@ -40,7 +40,7 @@ void Lamp_Start(void)
 
 
 
-		if(HAL_ADC_Start_DMA(&hadc1, hlamp.ADC_Results, 2) != HAL_OK)
+		if(HAL_ADC_Start_IT(&hadc1/*, hlamp.ADC_Results, 2*/) != HAL_OK)
 		{
 			Error_Handler();
 		}
