@@ -38,11 +38,7 @@ void Lamp_Start(void)
 			Error_Handler();
 		}
 
-		// start lamp pwm
-		if(HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_4) != HAL_OK)
-		{
-			Error_Handler();
-		}
+
 
 		if(HAL_ADC_Start_DMA(&hadc1, hlamp.ADC_Results, 2) != HAL_OK)
 		{
@@ -134,10 +130,6 @@ void Lamp_DeInit(void)
 
 
 	//#############PWM_OUT_Deinit############################
-	if(HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_4) != HAL_OK)
-	{
-		Error_Handler();
-	}
 
 	//#######################################################
 

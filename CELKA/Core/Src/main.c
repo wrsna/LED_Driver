@@ -116,6 +116,12 @@ int main(void)
    {
 	   Error_Handler();
    }
+   __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 0);
+
+	if(HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_4) != HAL_OK)
+	{
+		Error_Handler();
+	}
 
   /* USER CODE END 2 */
 

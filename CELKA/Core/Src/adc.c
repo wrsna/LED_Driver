@@ -198,7 +198,7 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
 
 	  }
 
-
+__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 200);
 	  // HAL_ADC_ConfigChanell(); //Ta koda je delala probleme tuki in je šlo v Err_handler();
 
 		//HAL_ADC_Start_IT(hadc); ///!!!! trigger timer????
