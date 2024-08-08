@@ -1,5 +1,5 @@
 Drivers/Celka/Src/celka.o: ../Drivers/Celka/Src/celka.c \
- C:/Users/mihas/Documents/GitHub/LED_Driver/CELKA/Drivers/Celka/Inc/celka.h \
+ C:/Users/Miha/Documents/GitHub/LED_Driver/CELKA/Drivers/Celka/Inc/celka.h \
  ../Core/Inc/main.h ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal.h \
  ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_ll_system.h \
  ../Drivers/CMSIS/Device/ST/STM32C0xx/Include/stm32c0xx.h \
@@ -34,8 +34,8 @@ Drivers/Celka/Src/celka.o: ../Drivers/Celka/Src/celka.c \
  ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_tim.h \
  ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_tim_ex.h \
  ../Core/Inc/adc.h ../Core/Inc/main.h ../Core/Inc/tim.h \
- ../Core/Inc/gpio.h
-C:/Users/mihas/Documents/GitHub/LED_Driver/CELKA/Drivers/Celka/Inc/celka.h:
+ ../Core/Inc/gpio.h ../Core/Inc/dma.h
+C:/Users/Miha/Documents/GitHub/LED_Driver/CELKA/Drivers/Celka/Inc/celka.h:
 ../Core/Inc/main.h:
 ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal.h:
 ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_ll_system.h:
@@ -74,3 +74,4 @@ C:/Users/mihas/Documents/GitHub/LED_Driver/CELKA/Drivers/Celka/Inc/celka.h:
 ../Core/Inc/main.h:
 ../Core/Inc/tim.h:
 ../Core/Inc/gpio.h:
+../Core/Inc/dma.h:

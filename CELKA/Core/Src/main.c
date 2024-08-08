@@ -69,8 +69,7 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-	GPIO_PinState button 	= GPIO_PIN_SET;
-	GPIO_PinState buttonOld = GPIO_PIN_SET;
+
 
     extern LAMP_HandleTypedef hlamp;
     hlamp.ADC_Results[TEMP_LOCATION] = 0;
@@ -79,6 +78,7 @@ int main(void)
 	hlamp.setup  = LAMP_SETUP_OFF;
 	hlamp.button = 0;
 	hlamp.helth  = LAMP_OK;
+	hlamp.pressed = FALSE;
 
   /* USER CODE END 1 */
 
@@ -101,10 +101,21 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
 
+  MX_TIM1_Init();
+
+#ifdef IWDG_
   MX_IWDG_Init();
+#endif
+
+  MX_TIM16_Init();
   /* USER CODE BEGIN 2 */
 
-   __HAL_IWDG_START(&hiwdg);
+
+
+   if(HAL_TIM_Base_Start_IT(&htim16) != HAL_OK)
+   {
+	   Error_Handler();
+   }
 
   /* USER CODE END 2 */
 
@@ -112,24 +123,21 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  button = HAL_GPIO_ReadPin(PUSH_BUTTON_GPIO_Port, PUSH_BUTTON_Pin);
-	  if(buttonOld == GPIO_PIN_SET && button == GPIO_PIN_RESET)
+    /* USER CODE END WHILE */
+
+	  if(hlamp.pressed == TRUE)
 	  {
 
 		  hlamp.button++;
+		  hlamp.pressed = FALSE;
 
 		  Lamp_Start();
 		  Lamp_SetPower();
 
 	  }
-	  buttonOld = button;
-    /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-
-	  HAL_IWDG_Refresh(&hiwdg);
   }
-  while(1); // security
   /* USER CODE END 3 */
 }
 

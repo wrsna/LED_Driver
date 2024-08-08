@@ -18,9 +18,9 @@ void Lamp_Start(void)
 	{
 		hlamp.status = LAMP_ON;
 
+		MX_DMA_Init();
 	    MX_ADC1_Init();
 	    MX_TIM14_Init();
-	    MX_TIM1_Init();
 	    MX_TIM3_Init();
 
 		// start 5s setup timer
@@ -138,14 +138,7 @@ void Lamp_DeInit(void)
 	{
 		Error_Handler();
 	}
-	if(HAL_TIM_PWM_DeInit(&htim1) != HAL_OK)
-	{
-		Error_Handler();
-	}
-	if(HAL_TIM_Base_DeInit(&htim1) != HAL_OK)
-	{
-		Error_Handler();
-	}
+
 	//#######################################################
 
 

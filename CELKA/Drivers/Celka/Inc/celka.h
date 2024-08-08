@@ -18,6 +18,7 @@ extern "C" {
 #include "adc.h"
 #include "tim.h"
 #include "gpio.h"
+#include "dma.h"
 
 /* USER CODE BEGIN Private defines */
 #define TEMP_TH 1850	//4095 -> 3V3
@@ -25,6 +26,9 @@ extern "C" {
 
 #define TEMP_LOCATION	0
 #define BATT_LOCATION	1
+
+#define TRUE 1
+#define FALSE 0
 /* USER CODE END Private defines */
 
 
@@ -52,6 +56,7 @@ typedef struct
 	LampStatus_t setup;
 	LampStatus_ERR_t helth;
 	uint8_t button;
+	uint8_t pressed;
 	uint32_t ADC_Results[2];
 
 }LAMP_HandleTypedef;
