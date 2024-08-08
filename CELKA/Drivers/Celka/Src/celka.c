@@ -112,14 +112,11 @@ void Lamp_DeInit(void)
 
 
 	//###########5sTIM_Deinit################################
-	if(HAL_TIM_OnePulse_Stop_IT(&htim14,0) != HAL_OK)
+	if(HAL_TIM_Base_Stop_IT(&htim14) != HAL_OK)
 	{
 		Error_Handler();
 	}
-	if(HAL_TIM_OnePulse_DeInit(&htim14) != HAL_OK)
-	{
-		Error_Handler();
-	}
+
 	if(HAL_TIM_Base_DeInit(&htim14) != HAL_OK)
 	{
 		Error_Handler();

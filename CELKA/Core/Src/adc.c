@@ -189,7 +189,7 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* adcHandle)
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
 {
 
-
+		static int duty = 200;
 	  // check status and turn lamp off if overhit or batt low
 	  if((hlamp.status == LAMP_ON) && ((hlamp.ADC_Results[TEMP_LOCATION] >= TEMP_TH) || (hlamp.ADC_Results[BATT_LOCATION] <= BATT_TH)))
 	  {
@@ -198,9 +198,10 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
 
 	  }
 
-__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 200);
-	  // HAL_ADC_ConfigChanell(); //Ta koda je delala probleme tuki in je šlo v Err_handler();
 
+	  // HAL_ADC_ConfigChanell(); //Ta koda je delala probleme tuki in je šlo v Err_handler();
+	  __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, duty);
+	  duty = duty+100;
 		//HAL_ADC_Start_IT(hadc); ///!!!! trigger timer????
 }
 
