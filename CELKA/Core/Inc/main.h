@@ -65,7 +65,6 @@ void Error_Handler(void);
 #define ADC1_TEMP_GPIO_Port GPIOA
 #define PUSH_BUTTON_Pin GPIO_PIN_13
 #define PUSH_BUTTON_GPIO_Port GPIOA
-#define PUSH_BUTTON_EXTI_IRQn EXTI4_15_IRQn
 
 /* USER CODE BEGIN Private defines */
 

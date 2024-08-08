@@ -18,7 +18,6 @@ void Lamp_Start(void)
 	{
 		hlamp.status = LAMP_ON;
 
-		MX_DMA_Init();
 	    MX_ADC1_Init();
 	    MX_TIM14_Init();
 	    MX_TIM3_Init();
@@ -40,7 +39,7 @@ void Lamp_Start(void)
 
 
 
-		if(HAL_ADC_Start_IT(&hadc1/*, hlamp.ADC_Results, 2*/) != HAL_OK)
+		if(HAL_ADC_Start_IT(&hadc1) != HAL_OK)
 		{
 			Error_Handler();
 		}
@@ -97,7 +96,7 @@ void Lamp_SetPower(void)
 void Lamp_DeInit(void)
 {
 	//#############ADC_Deinit################################
-	if(HAL_ADC_Stop_DMA(&hadc1) != HAL_OK)
+	if(HAL_ADC_Stop_IT(&hadc1) != HAL_OK)
 	{
 		Error_Handler();
 	}

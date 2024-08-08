@@ -18,11 +18,13 @@ extern "C" {
 #include "adc.h"
 #include "tim.h"
 #include "gpio.h"
-#include "dma.h"
 
 /* USER CODE BEGIN Private defines */
 #define TEMP_TH 1850	//4095 -> 3V3
 #define BATT_TH 1850	//4095 -> 3V3
+
+#define TEMP_HIST 1800
+#define BATT_HIST 1900
 
 #define TEMP_LOCATION	0
 #define BATT_LOCATION	1

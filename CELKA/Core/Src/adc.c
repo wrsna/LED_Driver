@@ -29,7 +29,6 @@ extern LAMP_HandleTypedef hlamp;
 /* USER CODE END 0 */
 
 ADC_HandleTypeDef hadc1;
-DMA_HandleTypeDef hdma_adc1;
 
 /* ADC1 init function */
 void MX_ADC1_Init(void)
@@ -52,7 +51,7 @@ void MX_ADC1_Init(void)
   hadc1.Init.Resolution = ADC_RESOLUTION_12B;
   hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;
   hadc1.Init.ScanConvMode = ADC_SCAN_ENABLE;
-  hadc1.Init.EOCSelection = ADC_EOC_SEQ_CONV;
+  hadc1.Init.EOCSelection = ADC_EOC_SINGLE_CONV;
   hadc1.Init.LowPowerAutoWait = DISABLE;
   hadc1.Init.LowPowerAutoPowerOff = DISABLE;
   hadc1.Init.ContinuousConvMode = DISABLE;
@@ -130,24 +129,6 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* adcHandle)
 
     HAL_SYSCFG_SetPinBinding(HAL_BIND_SO8_PIN5_PA8);
 
-    /* ADC1 DMA Init */
-    /* ADC1 Init */
-    hdma_adc1.Instance = DMA1_Channel1;
-    hdma_adc1.Init.Request = DMA_REQUEST_ADC1;
-    hdma_adc1.Init.Direction = DMA_PERIPH_TO_MEMORY;
-    hdma_adc1.Init.PeriphInc = DMA_PINC_DISABLE;
-    hdma_adc1.Init.MemInc = DMA_MINC_ENABLE;
-    hdma_adc1.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;
-    hdma_adc1.Init.MemDataAlignment = DMA_MDATAALIGN_HALFWORD;
-    hdma_adc1.Init.Mode = DMA_CIRCULAR;
-    hdma_adc1.Init.Priority = DMA_PRIORITY_LOW;
-    if (HAL_DMA_Init(&hdma_adc1) != HAL_OK)
-    {
-      Error_Handler();
-    }
-
-    __HAL_LINKDMA(adcHandle,DMA_Handle,hdma_adc1);
-
     /* ADC1 interrupt Init */
     HAL_NVIC_SetPriority(ADC1_IRQn, 0, 0);
     HAL_NVIC_EnableIRQ(ADC1_IRQn);
@@ -174,9 +155,6 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* adcHandle)
     */
     HAL_GPIO_DeInit(GPIOA, ADC1_BAT_Pin|ADC1_TEMP_Pin);
 
-    /* ADC1 DMA DeInit */
-    HAL_DMA_DeInit(adcHandle->DMA_Handle);
-
     /* ADC1 interrupt Deinit */
     HAL_NVIC_DisableIRQ(ADC1_IRQn);
   /* USER CODE BEGIN ADC1_MspDeInit 1 */
@@ -187,38 +165,35 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* adcHandle)
 
 /* USER CODE BEGIN 1 */
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc){
-	  static uint8_t reentrance = 0;
-	  static uint32_t duty;
 
-	  reentrance++;
 
-	  if(reentrance == 1)
-	  {
-		  hlamp.ADC_Results[TEMP_LOCATION] = HAL_ADC_GetValue(hadc);
-		  duty = 200;
-	  }
 	  // check status and turn lamp off if overhit or batt low
-	  else if(reentrance == 2)
-	  {
-		  reentrance = 0;
-		  duty = 400;
-
-		  hlamp.ADC_Results[BATT_LOCATION] = HAL_ADC_GetValue(hadc);
 
 
-		  if((hlamp.status == LAMP_ON) && ((hlamp.ADC_Results[TEMP_LOCATION] >= TEMP_TH) || (hlamp.ADC_Results[BATT_LOCATION] <= BATT_TH)))
-	  	  {
-		  	 __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 300);
-		 	 hlamp.helth = (hlamp.ADC_Results[TEMP_LOCATION] >= TEMP_TH) ? LAMP_TEMP_ERR : LAMP_BATT_ERR;
+	static uint8_t reenrtaance = 0;
+	reenrtaance++;
 
-	  	  }
+	if(reenrtaance == 1)
+	{
+		hlamp.ADC_Results[TEMP_LOCATION] = HAL_ADC_GetValue(hadc);
+	}
+	else if(reenrtaance == 2)
+	{
+		hlamp.ADC_Results[BATT_LOCATION] = HAL_ADC_GetValue(hadc);
+		reenrtaance = 0;
+	}
 
+	if((hlamp.status == LAMP_ON) && ((hlamp.ADC_Results[TEMP_LOCATION] >= TEMP_TH) || (hlamp.ADC_Results[BATT_LOCATION] <= BATT_TH)))
+	{
+	    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 300);
+	    hlamp.helth = (hlamp.ADC_Results[TEMP_LOCATION] >= TEMP_TH) ? LAMP_TEMP_ERR : LAMP_BATT_ERR;
 
-	  }
+	}
+	else if((hlamp.status == LAMP_ON) && ((hlamp.ADC_Results[TEMP_LOCATION] <= TEMP_HIST) && (hlamp.ADC_Results[BATT_LOCATION] >= BATT_HIST)))
+	{
+		hlamp.helth = LAMP_OK;
+	}
 
-
-	  // HAL_ADC_ConfigChanell(); //Ta koda je delala probleme tuki in je šlo v Err_handler();
-		//HAL_ADC_Start_IT(hadc); ///!!!! trigger timer????
 }
 
 

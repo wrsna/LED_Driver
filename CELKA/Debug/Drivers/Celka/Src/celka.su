@@ -1,3 +1,3 @@
 ../Drivers/Celka/Src/celka.c:14:6:Lamp_Start	8	static
-../Drivers/Celka/Src/celka.c:52:6:Lamp_SetPower	8	static
-../Drivers/Celka/Src/celka.c:97:6:Lamp_DeInit	8	static
+../Drivers/Celka/Src/celka.c:51:6:Lamp_SetPower	8	static
+../Drivers/Celka/Src/celka.c:96:6:Lamp_DeInit	8	static
