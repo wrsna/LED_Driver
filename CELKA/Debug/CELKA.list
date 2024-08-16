@@ -37,11 +37,11 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  16 .debug_macro  0001454f  00000000  00000000  00016ccd  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   000107d3  00000000  00000000  0002b21c  2**0
+ 17 .debug_line   000107d5  00000000  00000000  0002b21c  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    0007fe6c  00000000  00000000  0003b9ef  2**0
+ 18 .debug_str    0007fe6c  00000000  00000000  0003b9f1  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000043  00000000  00000000  000bb85b  2**0
+ 19 .comment      00000043  00000000  00000000  000bb85d  2**0
                   CONTENTS, READONLY
  20 .debug_frame  00002e28  00000000  00000000  000bb8a0  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
@@ -313,10 +313,10 @@ void MX_ADC1_Init(void)
  8000286:	2280      	movs	r2, #128	@ 0x80
  8000288:	00d2      	lsls	r2, r2, #3
  800028a:	629a      	str	r2, [r3, #40]	@ 0x28
-  hadc1.Init.DMAContinuousRequests = DISABLE;
+  hadc1.Init.DMAContinuousRequests = ENABLE;
  800028c:	4b22      	ldr	r3, [pc, #136]	@ (8000318 <MX_ADC1_Init+0xf8>)
  800028e:	222c      	movs	r2, #44	@ 0x2c
- 8000290:	2100      	movs	r1, #0
+ 8000290:	2101      	movs	r1, #1
  8000292:	5499      	strb	r1, [r3, r2]
   hadc1.Init.Overrun = ADC_OVR_DATA_PRESERVED;
  8000294:	4b20      	ldr	r3, [pc, #128]	@ (8000318 <MX_ADC1_Init+0xf8>)
@@ -947,17 +947,17 @@ int main(void)
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
-  MX_GPIO_Init();
+   MX_GPIO_Init();
  8000612:	f7ff ffa9 	bl	8000568 <MX_GPIO_Init>
 
-  MX_TIM1_Init();
+   MX_TIM1_Init();
  8000616:	f000 f8f3 	bl	8000800 <MX_TIM1_Init>
 
-#ifdef IWDG_
-  MX_IWDG_Init();
-#endif
+ #ifdef IWDG_
+   MX_IWDG_Init();
+ #endif
 
-  MX_TIM16_Init();
+   MX_TIM16_Init();
  800061a:	f000 fa45 	bl	8000aa8 <MX_TIM16_Init>
   /* USER CODE BEGIN 2 */
 

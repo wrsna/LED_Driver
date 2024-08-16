@@ -99,15 +99,15 @@ int main(void)
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
-  MX_GPIO_Init();
+   MX_GPIO_Init();
 
-  MX_TIM1_Init();
+   MX_TIM1_Init();
 
-#ifdef IWDG_
-  MX_IWDG_Init();
-#endif
+ #ifdef IWDG_
+   MX_IWDG_Init();
+ #endif
 
-  MX_TIM16_Init();
+   MX_TIM16_Init();
   /* USER CODE BEGIN 2 */
 
 

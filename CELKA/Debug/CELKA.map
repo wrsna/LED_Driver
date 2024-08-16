@@ -4520,26 +4520,26 @@ LOAD C:/ST/STM32CubeIDE_1.16.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.ext
  .debug_macro   0x00014165      0x1f6 ./Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_tim.o
  .debug_macro   0x0001435b      0x1f4 ./Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_tim_ex.o
 
-.debug_line     0x00000000    0x107d3
+.debug_line     0x00000000    0x107d5
  .debug_line    0x00000000      0x95d ./Core/Src/adc.o
  .debug_line    0x0000095d      0x7a3 ./Core/Src/dma.o
  .debug_line    0x00001100      0x81a ./Core/Src/gpio.o
- .debug_line    0x0000191a      0x8c7 ./Core/Src/main.o
- .debug_line    0x000021e1      0x7a7 ./Core/Src/stm32c0xx_hal_msp.o
- .debug_line    0x00002988      0x854 ./Core/Src/stm32c0xx_it.o
- .debug_line    0x000031dc      0x7ed ./Core/Src/system_stm32c0xx.o
- .debug_line    0x000039c9      0xa78 ./Core/Src/tim.o
- .debug_line    0x00004441       0x7d ./Core/Startup/startup_stm32c011j6mx.o
- .debug_line    0x000044be      0x8f5 ./Drivers/Celka/Src/celka.o
- .debug_line    0x00004db3      0xb06 ./Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal.o
- .debug_line    0x000058b9     0x1935 ./Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_adc.o
- .debug_line    0x000071ee      0xbcf ./Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_cortex.o
- .debug_line    0x00007dbd      0xe08 ./Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_dma.o
- .debug_line    0x00008bc5      0xc0e ./Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_gpio.o
- .debug_line    0x000097d3      0xd4c ./Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_rcc.o
- .debug_line    0x0000a51f      0xa4b ./Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_rcc_ex.o
- .debug_line    0x0000af6a     0x3c0a ./Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_tim.o
- .debug_line    0x0000eb74     0x1c5f ./Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_tim_ex.o
+ .debug_line    0x0000191a      0x8c9 ./Core/Src/main.o
+ .debug_line    0x000021e3      0x7a7 ./Core/Src/stm32c0xx_hal_msp.o
+ .debug_line    0x0000298a      0x854 ./Core/Src/stm32c0xx_it.o
+ .debug_line    0x000031de      0x7ed ./Core/Src/system_stm32c0xx.o
+ .debug_line    0x000039cb      0xa78 ./Core/Src/tim.o
+ .debug_line    0x00004443       0x7d ./Core/Startup/startup_stm32c011j6mx.o
+ .debug_line    0x000044c0      0x8f5 ./Drivers/Celka/Src/celka.o
+ .debug_line    0x00004db5      0xb06 ./Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal.o
+ .debug_line    0x000058bb     0x1935 ./Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_adc.o
+ .debug_line    0x000071f0      0xbcf ./Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_cortex.o
+ .debug_line    0x00007dbf      0xe08 ./Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_dma.o
+ .debug_line    0x00008bc7      0xc0e ./Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_gpio.o
+ .debug_line    0x000097d5      0xd4c ./Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_rcc.o
+ .debug_line    0x0000a521      0xa4b ./Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_rcc_ex.o
+ .debug_line    0x0000af6c     0x3c0a ./Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_tim.o
+ .debug_line    0x0000eb76     0x1c5f ./Drivers/STM32C0xx_HAL_Driver/Src/stm32c0xx_hal_tim_ex.o
 
 .debug_str      0x00000000    0x7fe6c
  .debug_str     0x00000000    0x7c8c0 ./Core/Src/adc.o
