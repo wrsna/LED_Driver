@@ -18,6 +18,7 @@ extern "C" {
 #include "adc.h"
 #include "tim.h"
 #include "gpio.h"
+#include "dma.h"
 
 /* USER CODE BEGIN Private defines */
 #define TEMP_TH 1850	//4095 -> 3V3

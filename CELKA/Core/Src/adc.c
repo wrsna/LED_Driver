@@ -29,6 +29,7 @@ extern LAMP_HandleTypedef hlamp;
 /* USER CODE END 0 */
 
 ADC_HandleTypeDef hadc1;
+DMA_HandleTypeDef hdma_adc1;
 
 /* ADC1 init function */
 void MX_ADC1_Init(void)
@@ -51,7 +52,7 @@ void MX_ADC1_Init(void)
   hadc1.Init.Resolution = ADC_RESOLUTION_12B;
   hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;
   hadc1.Init.ScanConvMode = ADC_SCAN_ENABLE;
-  hadc1.Init.EOCSelection = ADC_EOC_SINGLE_CONV;
+  hadc1.Init.EOCSelection = ADC_EOC_SEQ_CONV;
   hadc1.Init.LowPowerAutoWait = DISABLE;
   hadc1.Init.LowPowerAutoPowerOff = DISABLE;
   hadc1.Init.ContinuousConvMode = DISABLE;
@@ -61,8 +62,8 @@ void MX_ADC1_Init(void)
   hadc1.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_RISING;
   hadc1.Init.DMAContinuousRequests = DISABLE;
   hadc1.Init.Overrun = ADC_OVR_DATA_PRESERVED;
-  hadc1.Init.SamplingTimeCommon1 = ADC_SAMPLETIME_1CYCLE_5;
-  hadc1.Init.SamplingTimeCommon2 = ADC_SAMPLETIME_1CYCLE_5;
+  hadc1.Init.SamplingTimeCommon1 = ADC_SAMPLETIME_7CYCLES_5;
+  hadc1.Init.SamplingTimeCommon2 = ADC_SAMPLETIME_7CYCLES_5;
   hadc1.Init.OversamplingMode = DISABLE;
   hadc1.Init.TriggerFrequencyMode = ADC_TRIGGER_FREQ_HIGH;
   if (HAL_ADC_Init(&hadc1) != HAL_OK)
@@ -84,6 +85,7 @@ void MX_ADC1_Init(void)
   */
   sConfig.Channel = ADC_CHANNEL_8;
   sConfig.Rank = ADC_REGULAR_RANK_2;
+  sConfig.SamplingTime = ADC_SAMPLINGTIME_COMMON_2;
   if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
   {
     Error_Handler();
@@ -129,9 +131,24 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* adcHandle)
 
     HAL_SYSCFG_SetPinBinding(HAL_BIND_SO8_PIN5_PA8);
 
-    /* ADC1 interrupt Init */
-    HAL_NVIC_SetPriority(ADC1_IRQn, 0, 0);
-    HAL_NVIC_EnableIRQ(ADC1_IRQn);
+    /* ADC1 DMA Init */
+    /* ADC1 Init */
+    hdma_adc1.Instance = DMA1_Channel1;
+    hdma_adc1.Init.Request = DMA_REQUEST_ADC1;
+    hdma_adc1.Init.Direction = DMA_PERIPH_TO_MEMORY;
+    hdma_adc1.Init.PeriphInc = DMA_PINC_DISABLE;
+    hdma_adc1.Init.MemInc = DMA_MINC_ENABLE;
+    hdma_adc1.Init.PeriphDataAlignment = DMA_PDATAALIGN_WORD;
+    hdma_adc1.Init.MemDataAlignment = DMA_MDATAALIGN_WORD;
+    hdma_adc1.Init.Mode = DMA_CIRCULAR;
+    hdma_adc1.Init.Priority = DMA_PRIORITY_LOW;
+    if (HAL_DMA_Init(&hdma_adc1) != HAL_OK)
+    {
+      Error_Handler();
+    }
+
+    __HAL_LINKDMA(adcHandle,DMA_Handle,hdma_adc1);
+
   /* USER CODE BEGIN ADC1_MspInit 1 */
 
   /* USER CODE END ADC1_MspInit 1 */
@@ -155,8 +172,8 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* adcHandle)
     */
     HAL_GPIO_DeInit(GPIOA, ADC1_BAT_Pin|ADC1_TEMP_Pin);
 
-    /* ADC1 interrupt Deinit */
-    HAL_NVIC_DisableIRQ(ADC1_IRQn);
+    /* ADC1 DMA DeInit */
+    HAL_DMA_DeInit(adcHandle->DMA_Handle);
   /* USER CODE BEGIN ADC1_MspDeInit 1 */
 
   /* USER CODE END ADC1_MspDeInit 1 */
@@ -168,7 +185,7 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc){
 
 
 	  // check status and turn lamp off if overhit or batt low
-
+/*
 
 	static uint8_t reenrtaance = 0;
 	reenrtaance++;
@@ -181,15 +198,29 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc){
 	{
 		hlamp.ADC_Results[BATT_LOCATION] = HAL_ADC_GetValue(hadc);
 		reenrtaance = 0;
-	}
 
-	if((hlamp.status == LAMP_ON) && ((hlamp.ADC_Results[TEMP_LOCATION] >= TEMP_TH) || (hlamp.ADC_Results[BATT_LOCATION] <= BATT_TH)))
+/*
+	if((hlamp.status == LAMP_ON) && (  	) || (hlamp.ADC_Results[BATT_LOCATION] <= BATT_TH)))
 	{
-	    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 300);
-	    hlamp.helth = (hlamp.ADC_Results[TEMP_LOCATION] >= TEMP_TH) ? LAMP_TEMP_ERR : LAMP_BATT_ERR;
+		__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 300);
+		hlamp.helth = (hlamp.ADC_Results[TEMP_LOCATION] >= TEMP_TH) ? LAMP_TEMP_ERR : LAMP_BATT_ERR;
+	}
 
 	}
-	else if((hlamp.status == LAMP_ON) && ((hlamp.ADC_Results[TEMP_LOCATION] <= TEMP_HIST) && (hlamp.ADC_Results[BATT_LOCATION] >= BATT_HIST)))
+*/
+
+
+	if(hlamp.status == LAMP_ON && hlamp.ADC_Results[TEMP_LOCATION] >= TEMP_TH)
+	{
+		__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 300);
+		hlamp.helth = LAMP_TEMP_ERR;
+	}
+	else if (hlamp.status == LAMP_ON && hlamp.ADC_Results[BATT_LOCATION] <= BATT_TH)
+	{
+		__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 300);
+		hlamp.helth = LAMP_BATT_ERR;
+	}
+	else if(hlamp.status == LAMP_ON && hlamp.ADC_Results[TEMP_LOCATION] < TEMP_HIST && hlamp.ADC_Results[BATT_LOCATION] > BATT_HIST)
 	{
 		hlamp.helth = LAMP_OK;
 	}

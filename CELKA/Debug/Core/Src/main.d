@@ -32,8 +32,8 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_pwr_ex.h \
  ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_tim.h \
  ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_tim_ex.h \
- ../Core/Inc/adc.h ../Core/Inc/main.h ../Core/Inc/iwdg.h \
- ../Core/Inc/tim.h \
+ ../Core/Inc/adc.h ../Core/Inc/main.h ../Core/Inc/dma.h \
+ ../Core/Inc/iwdg.h ../Core/Inc/tim.h \
  C:/Users/mihas/Documents/GitHub/LED_Driver/CELKA/Drivers/Celka/Inc/celka.h \
  ../Core/Inc/gpio.h
 ../Core/Inc/main.h:
@@ -72,6 +72,7 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 ../Drivers/STM32C0xx_HAL_Driver/Inc/stm32c0xx_hal_tim_ex.h:
 ../Core/Inc/adc.h:
 ../Core/Inc/main.h:
+../Core/Inc/dma.h:
 ../Core/Inc/iwdg.h:
 ../Core/Inc/tim.h:
 C:/Users/mihas/Documents/GitHub/LED_Driver/CELKA/Drivers/Celka/Inc/celka.h:
