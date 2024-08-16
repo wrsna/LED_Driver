@@ -44,8 +44,8 @@ void Lamp_Start(void)
 		{
 			Error_Handler();
 		}
-		//hlamp.helth = LAMP_OK;
-		//__HAL_TIM_SET_COUNTER(&htim3, 29990);
+		hlamp.helth = LAMP_OK;
+		__HAL_TIM_SET_COUNTER(&htim3, 29995);
 
 	}
 
@@ -93,6 +93,7 @@ void Lamp_SetPower(void)
 	if((hlamp.helth != LAMP_OK) && (hlamp.status != LAMP_OFF))
 	{
 		__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 300);
+		hlamp.button = 3;
 	}
 
 }
